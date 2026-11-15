@@ -8,7 +8,7 @@
 
 // File includes
 #include "MetalKit/MTKView.hpp"
-#include "Renderer.h"
+#include "../Rendering/Renderer.h"
 
 
 class Renderer;

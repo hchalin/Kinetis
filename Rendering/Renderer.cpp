@@ -6,9 +6,9 @@
 
 Renderer::Renderer(MTL::Device *pDevice):
     _pDevice(pDevice),
-   _PSO(nullptr),
     _commandQueue(NS::TransferPtr(_pDevice->newCommandQueue()))
 {
+
 
 }
 Renderer::~Renderer() {

@@ -7,3 +7,7 @@
 **/xcuserdata/
 *.xcuserstate
 **/DerivedData/
+
+# JetBrains IDE settings
+.idea/
+

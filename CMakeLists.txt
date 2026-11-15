@@ -11,13 +11,18 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_executable(Kinetis
     main.cpp
-        KinetisAppDelegate.cpp
-        KinetisAppDelegate.h
-        KinetisViewDelegate.cpp
-        KinetisViewDelegate.h
-    MetalCppImplementation.cpp
-        Renderer.cpp
-        Renderer.h
+        App/KinetisAppDelegate.cpp
+        App/KinetisAppDelegate.h
+        View/KinetisViewDelegate.cpp
+        View/KinetisViewDelegate.h
+        Backend/MetalCppImplementation.cpp
+        Rendering/Renderer.cpp
+        Rendering/Renderer.h
+        RenderPasses/GBufferPass.cpp
+        RenderPasses/GBufferPass.h
+        RenderPasses/LightingPass.cpp
+        RenderPasses/LightingPass.h
+        RenderPasses/RenderPass.h
 )
 
 # Pre compile shaders
@@ -40,10 +45,11 @@ find_package(Chrono REQUIRED CONFIG)
 
 
 target_link_libraries(Kinetis PRIVATE
-    "-framework Metal"
-    "-framework Foundation"
-    "-framework QuartzCore"
-    "-framework AppKit"
-    "-framework MetalKit"
+        "-framework Metal"
+        "-framework Foundation"
+        "-framework QuartzCore"
+        "-framework AppKit"
+        "-framework MetalKit"
+        "-framework ModelIO"
         ${CHRONO_TARGETS}
 )

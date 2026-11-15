@@ -9,7 +9,7 @@
 #include <MetalKit/MetalKit.hpp>
 #include <memory>
 
-#include "KinetisViewDelegate.h"
+#include "../View/KinetisViewDelegate.h"
 
 class KinetisAppDelegate : public NS::ApplicationDelegate {
 public:

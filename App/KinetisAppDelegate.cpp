@@ -3,7 +3,7 @@
 //
 
 #include "KinetisAppDelegate.h"
-#include "KinetisViewDelegate.h"
+#include "../View/KinetisViewDelegate.h"
 
 
 
@@ -49,8 +49,11 @@ void KinetisAppDelegate::applicationDidFinishLaunching(NS::Notification *pNotifi
 }
 
 void KinetisAppDelegate::applicationWillFinishLaunching(NS::Notification *pNotification) {
-    NS::Application* pApp = reinterpret_cast< NS::Application* >( pNotification->object() );
+#if 0   // Dont compile
+    auto* pApp = reinterpret_cast< NS::Application* >( pNotification->object() );
     pApp->setActivationPolicy( NS::ActivationPolicy::ActivationPolicyRegular );
+#endif
+
 }
 bool KinetisAppDelegate::applicationShouldTerminateAfterLastWindowClosed(NS::Application *pSender) {
     return true;

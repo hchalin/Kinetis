@@ -7,14 +7,13 @@
 #include <Metal/Metal.hpp>
 #include <MetalKit/MetalKit.hpp>
 
-class Renderer {
+class Renderer final {
 public:
-    Renderer(MTL::Device *pDevice);
+    explicit Renderer(MTL::Device *pDevice);
     ~Renderer();
     void draw(MTK::View* pView);
 private:
     MTL::Device* _pDevice;
-    NS::SharedPtr<MTL::RenderPipelineState> _PSO;
     NS::SharedPtr<MTL::CommandQueue> _commandQueue;
 
 };
