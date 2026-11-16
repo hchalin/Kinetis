@@ -11,7 +11,7 @@ LightingPass::LightingPass(MTK::View *view): RenderPass(view),
 }
 
 //
-void LightingPass::resize() {
+void LightingPass::resize(MTK::View* view, CGSize size) {
 
 }
 

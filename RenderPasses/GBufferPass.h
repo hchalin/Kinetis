@@ -5,20 +5,17 @@
 #pragma once
 #include "RenderPass.h"
 
-
 class GBufferPass final :public RenderPass{
 public:
      explicit GBufferPass(MTK::View* view);
-     // ~GBufferPass() override;
      void draw(MTL::CommandBuffer *, Scene& scene, Uniforms& uniforms, Params& params) override;
-
      /**
      * @brief Resizes the G-buffer render targets.
      *
      * Recreates the albedo, normal, position, and depth
      * textures to match the Metal view's drawable size.
      */
-     void resize() override;
+     void resize(MTK::View* view, CGSize size) override;
 
 private:
      // * Textures

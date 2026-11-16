@@ -9,7 +9,7 @@ GBufferPass::GBufferPass(MTK::View *view) : RenderPass(view),
 {
 
 }
-void GBufferPass::resize() {
+void GBufferPass::resize(MTK::View* view, CGSize size) {
 
 }
 

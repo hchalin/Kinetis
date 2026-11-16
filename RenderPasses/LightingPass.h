@@ -5,17 +5,12 @@
 #pragma once
 #include "RenderPass.h"
 
-// TODO: Remove forward declarations once created.
-class Scene;
-struct Uniforms;
-struct Params;
-
 class LightingPass final : public RenderPass{
 public:
     explicit LightingPass(MTK::View* view);
-    // ~LightingPass() override;
+
     void draw(MTL::CommandBuffer *, Scene& scene, Uniforms& uniforms, Params& params) override;
-    void resize() override;
+    void resize(MTK::View* view, CGSize size) override;
 
 private:
     // * PSO Descriptor

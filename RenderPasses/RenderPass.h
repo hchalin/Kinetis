@@ -23,7 +23,7 @@ class RenderPass {
 public:
     virtual ~RenderPass() = default;
 
-    virtual void resize() = 0;
+    virtual void resize(MTK::View* view, CGSize size) = 0;
     virtual void draw(MTL::CommandBuffer*, Scene& scene, Uniforms& uniforms, Params& params) = 0;
 
 
