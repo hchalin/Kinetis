@@ -18,11 +18,6 @@ public:
     void resize() override;
 
 private:
-    // * Textures
-    NS::SharedPtr<MTL::Texture> _albedoTexture;
-    NS::SharedPtr<MTL::Texture> _normalTexture;
-    NS::SharedPtr<MTL::Texture> _positionTexture;
-
     // * PSO Descriptor
     NS::SharedPtr<MTL::RenderPassDescriptor> _renderPassDescriptor;
     NS::SharedPtr<MTL::RenderPipelineState> _PSO;
