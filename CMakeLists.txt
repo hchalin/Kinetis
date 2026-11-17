@@ -25,6 +25,19 @@ add_executable(Kinetis
         RenderPasses/RenderPass.h
 )
 
+# Chrono test
+find_package(Chrono REQUIRED CONFIG)
+message(STATUS "Chrono found at: ${Chrono_DIR}")
+message(STATUS "Chrono targets: ${CHRONO_TARGETS}")
+
+add_executable(KinetisPhysicsTest
+        Simulation/PhysicsSmokeTest.cpp
+)
+
+target_link_libraries(KinetisPhysicsTest PRIVATE
+        ${CHRONO_TARGETS}
+)
+
 # Pre compile shaders
 # Process the Shaders directory
 add_subdirectory(Shaders)
@@ -38,10 +51,9 @@ target_compile_definitions(Kinetis PRIVATE
 )
 
 target_include_directories(Kinetis PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/Backend/metal-cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Backend/metal-cpp
 )
 
-find_package(Chrono REQUIRED CONFIG)
 
 
 target_link_libraries(Kinetis PRIVATE
@@ -51,5 +63,4 @@ target_link_libraries(Kinetis PRIVATE
         "-framework AppKit"
         "-framework MetalKit"
         "-framework ModelIO"
-        ${CHRONO_TARGETS}
 )
