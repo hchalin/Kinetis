@@ -25,9 +25,9 @@
 
 ### Geometry and GPU Data
 - [ ] Define vertex structure (position, normal, UV)
-- [ ] Create basic cube geometry(Primative class would be nice)
-- [ ] Create vertex buffer
-- [ ] Create index buffer
+- [ ] Create basic cube geometry (a Primitive class would be nice)
+- [ ] Create a vertex buffer
+- [ ] Create an index buffer
 - [ ] Define shared CPU/GPU uniforms
 - [ ] Define Params for shaders customization (light count, exposure, etc...)
 - [ ] Create model, view, projection matrices
@@ -37,8 +37,9 @@
 
 ### Render Pass Architecture
 - [x] Create RenderPass abstract base class
-- [x] Create GBufferPass class
-- [x] Create LightingPass class
+- [ ] Create a ShaderPass class
+- [x] Create a GBufferPass class
+- [x] Create a LightingPass class
 - [ ] Define render pass initialization
 - [ ] Establish resource ownership
 - [ ] Connect passes to Renderer

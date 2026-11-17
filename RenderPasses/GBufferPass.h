@@ -3,7 +3,10 @@
 //
 
 #pragma once
+#include <MetalKit/MetalKit.hpp>
+
 #include "RenderPass.h"
+
 
 class GBufferPass final :public RenderPass{
 public:
