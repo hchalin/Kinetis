@@ -2,28 +2,34 @@
 // Created by Hayden Chalin on 11/16/26.
 //
 #include <memory>
+#include <cmath>
+#include <iostream>
+#include <cstdlib>
 
 #include <chrono/physics/ChSystemNSC.h>
 #include <chrono/physics/ChBody.h>
 #include <chrono/assets/ChVisualShapes.h>
 
-constexpr double N = 480.0;
-constexpr double dT = 1.0/N;
+#include "Simulation.h"
 
-using namespace chrono;
+constexpr int N = 480;
+/// Step size in time
+constexpr double dT = 1.0/N;
+constexpr double expectedSimTime = 1.0;
+constexpr double timeTolerance = 1e-10;
+constexpr double posTolerance = 1.5e-2;
+
+
 int main() {
 
-    ChSystemNSC sys;
+    // Gravitational constant
+    const chrono::ChVector3d gacc{0, 0, -9.81};
+    kinetis::Simulation sim{gacc};
 
-    const ChVector3d gacc{0, 0, -9.81};
-    sys.SetGravitationalAcceleration(gacc);
-
-    auto body = std::make_shared<ChBody>();
     const double startHeight {3.0};
-    body->SetPos(ChVector3d{0, 0, startHeight});
-
-
     const double mass {1.0};
+    auto body = std::make_shared<chrono::ChBody>();
+    body->SetPos(chrono::ChVector3d{0, 0, startHeight});
     body->SetMass(mass);
 
     const double a {1.0};
@@ -33,26 +39,32 @@ int main() {
     const double iYY = mass/12.0*((a*a) + (c*c));
     const double iZZ = mass/12.0*((a*a) + (b*b));
 
-    auto inertiaDiagonal = ChVector3d{iXX,iYY,iZZ};
+    auto inertiaDiagonal = chrono::ChVector3d{iXX,iYY,iZZ};
     body->SetInertiaXX(inertiaDiagonal);
 
-    sys.AddBody(body);
+    sim.addBody(body);
 
     for (int i {0}; i < N; ++i) {
-        sys.DoStepDynamics(dT);
+        sim.step(dT);
     }
     // Simulation time
-    auto simTime = sys.GetChTime();
-    auto chronoCalculatedPosistion = body->GetPos().z();
+    const double simTime = sim.getSimTime();
+    const double position = body->GetPos().z();
+    /// Calculated final position
     const double analyticalPosition = startHeight + 1.0/2.0*(gacc.z())*1*1;
-    const double absoluteError = chronoCalculatedPosistion - analyticalPosition;
+    const double absoluteError = std::abs(position - analyticalPosition);
 
     std::cout << "N value: " << N << std::endl;
     std::cout << "Final Simulation Time: " << simTime << "s" << std::endl;
-    std::cout << "Chrono's calculated final position: " << chronoCalculatedPosistion << "m"<< std::endl;
-    std::cout << "Calculated final position:j " << analyticalPosition << "m"<< std::endl;
-    std::cout << "Calculated height difference: " << std::abs(absoluteError) << "m"<< std::endl;
+    std::cout << "Chrono's calculated final position: " << position << "m"<< std::endl;
+    std::cout << "Calculated final position: " << analyticalPosition << "m"<< std::endl;
+    std::cout << "Calculated height difference: " << absoluteError*100.0 << "cm"<< std::endl;
 
-
+    if (std::abs(simTime - expectedSimTime) < timeTolerance && (std::abs(analyticalPosition - position) < posTolerance))
+        return EXIT_SUCCESS;
+    else {
+        std::cerr << "Simulation time was out of tolerance." << std::endl;
+        return EXIT_FAILURE;
+    }
 
 }

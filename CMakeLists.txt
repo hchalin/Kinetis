@@ -9,6 +9,18 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+enable_testing()
+
+include(FetchContent)
+
+FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG v1.17.0
+)
+
+FetchContent_MakeAvailable(googletest)
+
 add_executable(Kinetis
     main.cpp
         App/KinetisAppDelegate.cpp
@@ -30,11 +42,28 @@ find_package(Chrono REQUIRED CONFIG)
 message(STATUS "Chrono found at: ${Chrono_DIR}")
 message(STATUS "Chrono targets: ${CHRONO_TARGETS}")
 
+# Original physics smoke test
 add_executable(KinetisPhysicsTest
         Simulation/PhysicsSmokeTest.cpp
+        Simulation/Simulation.cpp
 )
 
 target_link_libraries(KinetisPhysicsTest PRIVATE
+        ${CHRONO_TARGETS}
+)
+
+# Google Test executable
+add_executable(KinetisUnitTests
+        Tests/SimulationTests.cpp
+        Simulation/Simulation.cpp
+)
+
+target_include_directories(KinetisUnitTests PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+target_link_libraries(KinetisUnitTests PRIVATE
+        GTest::gtest_main
         ${CHRONO_TARGETS}
 )
 
