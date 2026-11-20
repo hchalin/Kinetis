@@ -66,7 +66,6 @@ void KinetisViewDelegate::drawInMTKView(MTK::View *pView) {
         t += _dT;
     }
 
-    // _simulation.step()
     // std::cout << "Frame time: " << frameTime << std::endl;
     _pRenderer->draw(pView);
 }
