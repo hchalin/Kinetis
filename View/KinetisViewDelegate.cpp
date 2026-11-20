@@ -27,7 +27,8 @@ KinetisViewDelegate::KinetisViewDelegate(MTL::Device *pDevice, kinetis::Simulati
       _pRenderer(std::make_unique<Renderer>(pDevice)),
       _simulation(sim),
       _accumulator(0.0),
-      _dT(0.012), _t(0.0)
+      _dT(1.0 / 120.0),
+      _t(0.0)
 
 {
     using namespace std::chrono;
@@ -52,11 +53,13 @@ void KinetisViewDelegate::drawableSizeWillChange(MTK::View *pView, CGSize size) 
 void KinetisViewDelegate::drawInMTKView(MTK::View *pView) {
     using namespace std::chrono;
 
-    auto newTime = steady_clock::now();
-    auto frameTime = static_cast<double>(duration_cast<milliseconds>(newTime - _startTime).count());
-    frameTime *= 1e-02;     // convert 16ms -> 0.16s (ms)
-    if (frameTime > 25)
-        frameTime = 25;
+    const auto newTime = steady_clock::now();
+
+    const duration<double> elapsed = newTime - _startTime;
+    double frameTime = elapsed.count();
+
+    if (frameTime >= 0.025)
+        frameTime = 0.025;
     _startTime = newTime;
 
     _accumulator += frameTime;
