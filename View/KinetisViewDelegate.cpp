@@ -27,7 +27,7 @@ KinetisViewDelegate::KinetisViewDelegate(MTL::Device *pDevice, kinetis::Simulati
       _pRenderer(std::make_unique<Renderer>(pDevice)),
       _simulation(sim),
       _accumulator(0.0),
-      _dT(0.01), t(0.0)
+      _dT(0.012), _t(0.0)
 
 {
     using namespace std::chrono;
@@ -54,6 +54,7 @@ void KinetisViewDelegate::drawInMTKView(MTK::View *pView) {
 
     auto newTime = steady_clock::now();
     auto frameTime = static_cast<double>(duration_cast<milliseconds>(newTime - _startTime).count());
+    frameTime *= 1e-02;     // convert 16ms -> 0.16s (ms)
     if (frameTime > 25)
         frameTime = 25;
     _startTime = newTime;
@@ -61,12 +62,12 @@ void KinetisViewDelegate::drawInMTKView(MTK::View *pView) {
     _accumulator += frameTime;
 
     while (_accumulator >= _dT) {
-        _simulation.step(_dT, t);
+        _simulation.step(_dT);
         _accumulator -= _dT;
-        t += _dT;
+        _t += _dT;
     }
 
-    // std::cout << "Frame time: " << frameTime << std::endl;
+    std::cout << "Frame time: " << frameTime << std::endl;
     _pRenderer->draw(pView);
 }
 

@@ -13,7 +13,7 @@ namespace kinetis {
     }
 
 
-    void Simulation::step(double dT, double t) {
+    void Simulation::step(double dT) {
         _systemNCS.DoStepDynamics(dT);
     }
 
