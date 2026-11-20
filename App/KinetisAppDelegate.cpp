@@ -35,7 +35,7 @@ void KinetisAppDelegate::applicationDidFinishLaunching(NS::Notification *pNotifi
     _view->setColorPixelFormat(MTL::PixelFormat::PixelFormatBGRA8Unorm_sRGB);
 
     //* create and assign view delegate to view
-    _viewDelegate = std::make_unique<KinetisViewDelegate>(_device.get());
+    _viewDelegate = std::make_unique<KinetisViewDelegate>(_device.get(), _simulation);
     _view->setDelegate( _viewDelegate.get() );
 
     _window->setContentView( _view.get());

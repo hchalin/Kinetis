@@ -42,20 +42,36 @@ find_package(Chrono REQUIRED CONFIG)
 message(STATUS "Chrono found at: ${Chrono_DIR}")
 message(STATUS "Chrono targets: ${CHRONO_TARGETS}")
 
-# Original physics smoke test
-add_executable(KinetisPhysicsTest
-        Simulation/PhysicsSmokeTest.cpp
+
+########
+# Add Simluation as a static library
+########
+add_library(KinetisSimulation STATIC
+        Simulation/Simulation.h
         Simulation/Simulation.cpp
 )
 
+target_include_directories(KinetisSimulation PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+target_link_libraries(KinetisSimulation PUBLIC
+    ${CHRONO_TARGETS}
+)
+########
+
+# Original physics smoke test
+add_executable(KinetisPhysicsTest
+        Simulation/PhysicsSmokeTest.cpp
+)
+
 target_link_libraries(KinetisPhysicsTest PRIVATE
-        ${CHRONO_TARGETS}
+        KinetisSimulation
 )
 
 # Google Test executable
 add_executable(KinetisUnitTests
         Tests/SimulationTests.cpp
-        Simulation/Simulation.cpp
 )
 
 target_include_directories(KinetisUnitTests PRIVATE
@@ -64,8 +80,12 @@ target_include_directories(KinetisUnitTests PRIVATE
 
 target_link_libraries(KinetisUnitTests PRIVATE
         GTest::gtest_main
-        ${CHRONO_TARGETS}
+        KinetisSimulation
 )
+
+include(GoogleTest)
+
+gtest_discover_tests(KinetisUnitTests)
 
 # Pre compile shaders
 # Process the Shaders directory
@@ -92,4 +112,5 @@ target_link_libraries(Kinetis PRIVATE
         "-framework AppKit"
         "-framework MetalKit"
         "-framework ModelIO"
+        KinetisSimulation
 )

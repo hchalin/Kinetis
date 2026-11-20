@@ -10,6 +10,7 @@
 #include <memory>
 
 #include "../View/KinetisViewDelegate.h"
+#include "Simulation/Simulation.h"
 
 class KinetisAppDelegate : public NS::ApplicationDelegate {
 public:
@@ -21,5 +22,6 @@ private:
     NS::SharedPtr<NS::Window> _window;
     NS::SharedPtr<MTK::View> _view;
     NS::SharedPtr<MTL::Device> _device;
+    kinetis::Simulation _simulation;
     std::unique_ptr<KinetisViewDelegate> _viewDelegate;
 };

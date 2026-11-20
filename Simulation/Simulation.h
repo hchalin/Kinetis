@@ -16,7 +16,7 @@ namespace kinetis {
 
         ~Simulation() = default;
 
-        void step(double dT);
+        void step(double dT, double t);
 
         void addBody(std::shared_ptr<chrono::ChBody> body);
 
