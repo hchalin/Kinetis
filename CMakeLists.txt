@@ -35,6 +35,8 @@ add_executable(Kinetis
         RenderPasses/LightingPass.cpp
         RenderPasses/LightingPass.h
         RenderPasses/RenderPass.h
+        View/Scheduler.cpp
+        View/Scheduler.h
 )
 
 # Chrono test

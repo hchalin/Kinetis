@@ -3,7 +3,10 @@
 //
 #include <gtest/gtest.h>
 #include "Simulation/Simulation.h"
-
+/**
+ *  Test that the simulation advances the correct amount of time
+ *  Simulation Time: 1.0s
+ */
 TEST(SimulationTest, AdvancesTimeCorrectly) {
     kinetis::Simulation sim;
 
@@ -17,13 +20,17 @@ TEST(SimulationTest, AdvancesTimeCorrectly) {
     EXPECT_NEAR(sim.getSimTime(), 1.0, 1e-10);
 }
 
+/**
+ *  This test verifies that the simulated position calculation of a falling object matches that of the
+ *  arithmatic calculation.
+ */
 TEST(SimulationTest, FallingBodyPositionTest) {
     const double tolerance = 1.5e-2;
 
     const chrono::ChVector3d gacc{0.0, 0.0, -9.81};
     kinetis::Simulation sim{gacc};
 
-    // Create body at 3m high
+    // Create a body at 3 meters high
     auto body = std::make_shared<chrono::ChBody>();
     constexpr double startHeight = 3.0;
     constexpr double startTime = 0.0;
@@ -43,6 +50,12 @@ TEST(SimulationTest, FallingBodyPositionTest) {
     const double simulatedPosition = body->GetPos().z();
 
     EXPECT_NEAR(calculatedPosition, simulatedPosition, tolerance);
+}
 
+TEST(SimulationTest, NumericalIntegration) {
+    const double tolerance = 1.5e-2;
+
+    const chrono::ChVector3d gacc{0.0, 0.0, -9.81};
+    kinetis::Simulation sim{gacc};
 
 }

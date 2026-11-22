@@ -16,9 +16,9 @@ KinetisAppDelegate::~KinetisAppDelegate() {
 void KinetisAppDelegate::applicationDidFinishLaunching(NS::Notification *pNotification) {
 
     //* Define the frame size
-    CGRect frame = {.origin = {100.0, 100.0}, .size = {1024, 1024}};
+    constexpr CGRect frame = {.origin = {100.0, 100.0}, .size = {1024, 1024}};
 
-     //*  Create window
+     //*  Create a window
     NS::Window* _pWindow = NS::Window::alloc()->init(
         frame,
         NS::WindowStyleMaskClosable|NS::WindowStyleMaskTitled,
