@@ -28,8 +28,4 @@ private:
 
     // This schedular is in charge of controlling the render loop between the physics and render engine
     kinetis::Scheduler _scheduler;
-
-    std::chrono::time_point<std::chrono::steady_clock> _startTime;
-    double _accumulator;
-    double _dT;
 };
