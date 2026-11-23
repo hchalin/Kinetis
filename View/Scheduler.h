@@ -9,20 +9,25 @@
 #include "Simulation/Simulation.h"
 
 namespace kinetis {
+    using namespace std::chrono;
 
-class Scheduler {
-public:
-    Scheduler(kinetis::Simulation& sim);
-    ~Scheduler() = default;
+    class Scheduler {
+    public:
+        Scheduler(kinetis::Simulation &sim);
 
-    void timeStep();
+        Scheduler(kinetis::Simulation &sim, time_point<steady_clock> tp);
 
-private:
-    std::chrono::time_point<std::chrono::steady_clock> _startTime;
-    double _accumulator;
-    double _dT;
-    double _frameThreshold;
+        ~Scheduler() = default;
 
-    kinetis::Simulation& _simulation;
-};
+        void timeStep();
+        int timeStep( const time_point<steady_clock> & newTime, const time_point<steady_clock>& startTime);
+
+    private:
+        time_point<steady_clock> _startTime;
+        double _accumulator;
+        double _dT;
+        double _frameThreshold;
+
+        kinetis::Simulation &_simulation;
+    };
 }
