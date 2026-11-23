@@ -13,17 +13,18 @@ namespace kinetis {
 
     class Scheduler {
     public:
-        Scheduler(kinetis::Simulation &sim);
-
-        Scheduler(kinetis::Simulation &sim, time_point<steady_clock> tp);
-
+        explicit Scheduler(kinetis::Simulation &sim);
         ~Scheduler() = default;
 
+        // Production: calculate elapsed time automatically
         void timeStep();
-        int timeStep( const time_point<steady_clock> & newTime, const time_point<steady_clock>& startTime);
+
+        // Testing: supply elapsed time manually (seconds)
+        int timeStep(double elapsedSeconds);
 
     private:
-        time_point<steady_clock> _startTime;
+        steady_clock::time_point _startTime;
+
         double _accumulator;
         double _dT;
         double _frameThreshold;

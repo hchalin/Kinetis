@@ -3,6 +3,7 @@
 //
 #include <gtest/gtest.h>
 #include "Simulation/Simulation.h"
+#include "View/Scheduler.h"
 /**
  *  Test that the simulation advances the correct amount of time
  *  Simulation Time: 1.0s
@@ -52,10 +53,18 @@ TEST(SimulationTest, FallingBodyPositionTest) {
     EXPECT_NEAR(calculatedPosition, simulatedPosition, tolerance);
 }
 
-TEST(SimulationTest, NumericalIntegration) {
-    const double tolerance = 1.5e-2;
+TEST(SchedulerTest, MultipleStepsForLongFrame) {
+    kinetis::Simulation sim;
+    kinetis::Scheduler scheduler(sim);
 
-    const chrono::ChVector3d gacc{0.0, 0.0, -9.81};
-    kinetis::Simulation sim{gacc};
+    // Simulate a frame taking 22 milliseconds
+    const int steps = scheduler.timeStep(0.022);
 
+    EXPECT_EQ(steps, 2);
+
+    EXPECT_NEAR(
+        sim.getSimTime(),
+        2.0 / 120.0,
+        1e-10
+    );
 }
