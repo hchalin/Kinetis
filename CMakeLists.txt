@@ -37,6 +37,8 @@ add_executable(Kinetis
         RenderPasses/RenderPass.h
         View/Scheduler.cpp
         View/Scheduler.h
+        RenderPasses/ForwardRenderPass.cpp
+        RenderPasses/ForwardRenderPass.h
 )
 
 # Chrono test
@@ -74,6 +76,7 @@ target_link_libraries(KinetisPhysicsTest PRIVATE
 # Google Test executable
 add_executable(KinetisUnitTests
         Tests/SimulationTests.cpp
+        View/Scheduler.cpp
 )
 
 target_include_directories(KinetisUnitTests PRIVATE

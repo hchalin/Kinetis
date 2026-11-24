@@ -4,6 +4,9 @@
 
 #include "LightingPass.h"
 
+namespace kinetis {
+
+
 LightingPass::LightingPass(MTK::View *view): RenderPass(view),
     _label("Lighting Render Pass")
 {
@@ -20,3 +23,4 @@ void LightingPass::draw(MTL::CommandBuffer *, Scene &scene, Uniforms &uniforms, 
 
 }
 
+}

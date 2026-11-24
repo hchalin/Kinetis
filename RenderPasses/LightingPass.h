@@ -5,6 +5,8 @@
 #pragma once
 #include "RenderPass.h"
 
+namespace kinetis {
+
 class LightingPass final : public RenderPass{
 public:
     explicit LightingPass(MTK::View* view);
@@ -20,3 +22,4 @@ private:
     const std::string _label;
 };
 
+}

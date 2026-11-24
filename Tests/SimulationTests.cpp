@@ -53,18 +53,24 @@ TEST(SimulationTest, FallingBodyPositionTest) {
     EXPECT_NEAR(calculatedPosition, simulatedPosition, tolerance);
 }
 
+//TODO: Review this test more
 TEST(SchedulerTest, MultipleStepsForLongFrame) {
     kinetis::Simulation sim;
     kinetis::Scheduler scheduler(sim);
 
-    // Simulate a frame taking 22 milliseconds
-    const int steps = scheduler.timeStep(0.022);
+    constexpr double frameTime = 0.022;
+    constexpr int expectedSteps = 2;
 
-    EXPECT_EQ(steps, 2);
+    const int steps = scheduler.timeStep(frameTime);
+    const double simTime = sim.getSimTime();
 
-    EXPECT_NEAR(
-        sim.getSimTime(),
-        2.0 / 120.0,
-        1e-10
-    );
+    EXPECT_EQ(steps, expectedSteps)
+        << "Incorrect number of physics steps.";
+
+    EXPECT_NEAR(simTime, 2.0 / 120.0, 1e-10)
+        << "Simulation advanced by an unexpected duration.";
+
+    std::cout << "Frame duration: " << frameTime * 1000.0 << " ms\n"
+              << "Steps executed: " << steps << '\n'
+              << "Simulated time: " << simTime << " s\n";
 }

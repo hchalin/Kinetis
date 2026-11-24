@@ -8,6 +8,8 @@
 #include "RenderPass.h"
 
 
+namespace kinetis {
+
 class GBufferPass final :public RenderPass{
 public:
      explicit GBufferPass(MTK::View* view);
@@ -33,3 +35,4 @@ private:
      const std::string _label;
 
 };
+}

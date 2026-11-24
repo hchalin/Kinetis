@@ -30,8 +30,6 @@ namespace kinetis {
 /**
      *     Semi-implicit Euler Integration
      *      Source: https://www.gafferongames.com/post/fix_your_timestep/
-     *
-     *      Testable version
      */
     int Scheduler::timeStep(double elapsedSeconds) {
 
@@ -51,6 +49,5 @@ namespace kinetis {
         }
 
         return steps;
-
     }
 }
